@@ -60,7 +60,7 @@ if (!hello_run && Dubtrack.session.id) {
         draw_contact: false,
         draw_social: false,
         draw_chrome: false,
-		current_language: 'en'
+		current_language: false,
     };
 	
 	var dictionaries = {
@@ -106,6 +106,7 @@ if (!hello_run && Dubtrack.session.id) {
 			dictionaries.fr['Spacebar Mute'] = 'Muet avec Barre Espace';
 			dictionaries.fr['Show Timestamps'] = 'Montrer Horodatages';
 			dictionaries.fr['Warn On Navigation'] = 'Avertir lors de la Navigation';
+			dictionaries.fr['Switch Language'] = 'Changer de Langue';
 			dictionaries.fr['Customize'] = 'Personnaliser';
 			dictionaries.fr['Plug.dj Theme'] = 'Theme Plug.dj';
 			dictionaries.fr['Community Theme'] = 'Theme de la Communaute';
@@ -130,8 +131,14 @@ if (!hello_run && Dubtrack.session.id) {
 			dictionaries.fr['Link an image file:'] = 'Joindre un fichier image';
 			dictionaries.fr['It is recommended a .jpg file is used'] = 'Il est recommande d\'utiliser un fichier .jpg';
 			dictionaries.fr['Message from '] = 'Message de ';
-			
+			dictionaries.fr[' minutes.'] = ' minutes.';
+			dictionaries.fr['You\'re not in the queue.'] = 'Vous n\'etes pas dans la file.';
+
 			options.current_language = localStorage.getItem('current_language');
+			if(options.current_language == null || options.current_language == '')
+			{
+				options.current_language = 'en';
+			}
 			hello.option('current_language',options.current_language);
 		},
         //Ref 2.2: Initialize
@@ -238,6 +245,10 @@ if (!hello_run && Dubtrack.session.id) {
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
                                 '<p class="for_content_p">'+hello.translate('Warn On Navigation')+'</p>',
                             '</li>',
+							'<li onclick="hello.switch_language();" class="for_content_li for_content_feature switch_language">',
+								'<p class="for_content_off"><i class="fi-x"></i></p>',
+								'<p class="for_content_p">'+hello.translate('Switch Language')+'</p>',
+							'</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
@@ -477,9 +488,9 @@ if (!hello_run && Dubtrack.session.id) {
             var booth_duration = parseInt($('.queue-position').text());
             var booth_time = (booth_duration * time - time) + current_time;
             if (booth_time >= 0) {
-                $('.eta_tooltip_t').append('<div class="eta_tooltip" style="position: absolute;font: 1rem/1.5 proxima-nova,sans-serif;display: block;left: -33px;cursor: pointer;border-radius: 1.5rem;padding: 8px 16px;background: #fff;font-weight: 700;font-size: 13.6px;text-transform: uppercase;color: #000;opacity: .8;text-align: center;z-index: 9;">ETA: '+booth_time+' minutes.</div>');
+                $('.eta_tooltip_t').append('<div class="eta_tooltip" style="position: absolute;font: 1rem/1.5 proxima-nova,sans-serif;display: block;left: -33px;cursor: pointer;border-radius: 1.5rem;padding: 8px 16px;background: #fff;font-weight: 700;font-size: 13.6px;text-transform: uppercase;color: #000;opacity: .8;text-align: center;z-index: 9;">ETA: '+booth_time+hello.translate(' minutes.')+'</div>');
             } else {
-                $('.eta_tooltip_t').append('<div class="eta_tooltip" style="position: absolute;font: 1rem/1.5 proxima-nova,sans-serif;display: block;left: -33px;cursor: pointer;border-radius: 1.5rem;padding: 8px 16px;background: #fff;font-weight: 700;font-size: 13.6px;text-transform: uppercase;color: #000;opacity: .8;text-align: center;z-index: 9;">You\'re not in the queue.</div>');
+                $('.eta_tooltip_t').append('<div class="eta_tooltip" style="position: absolute;font: 1rem/1.5 proxima-nova,sans-serif;display: block;left: -33px;cursor: pointer;border-radius: 1.5rem;padding: 8px 16px;background: #fff;font-weight: 700;font-size: 13.6px;text-transform: uppercase;color: #000;opacity: .8;text-align: center;z-index: 9;">'+hello.translate('You\'re not in the queue.')+'</div>');
             }
         },
         hide_eta: function() {
@@ -554,6 +565,25 @@ if (!hello_run && Dubtrack.session.id) {
                 hello.off('.warn_redirect');
             }
         },
+		switch_language: function() {
+			if(!options.current_language) {
+				options.current_language = 'en';
+				hello.option('current_language', 'en');
+			} else {
+				var nextLanguage = 'en';
+				switch(options.current_language)
+				{
+					case 'en':
+						nextLanguage = 'fr';
+					case 'fr':
+						nextLanguage = 'en';
+				}
+				options.current_language = nextLanguage;
+				hello.option('current_language', nextLanguage);
+			}
+			// TODO - Show the correct flag
+			hello.initialize();
+		},
         afk_chat_respond: function(e) {
             var content = e.message;
             var user = Dubtrack.session.get('username');
