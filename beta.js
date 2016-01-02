@@ -29,7 +29,7 @@
 var hello_run;
 if (!hello_run && Dubtrack.session.id) {
     hello_run = true;
-    var our_version = '03.03.00 - Happy Holidays';
+    var our_version = '03.03.01 - Happy Holidays';
 
     //Ref 1: Variables
     var options = {

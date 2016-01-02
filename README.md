@@ -18,6 +18,10 @@ Our Team
 IMPORTANT
 ---
 
+__Updates (Version 03.03.01)__
+
+- Added French Translation and the ability to switch between English and French
+
 __Updates (Version 03.02.04)__
 
 - Added ability to set custom text phrases that trigger a mention sound
@@ -61,6 +65,7 @@ Features
 - Spacebar Mute
 - Show Timestamps
 - Warn on Navigation
+- Switch Language
 - plug.dj Theme
 - Community Theme
 - Custom CSS
@@ -71,7 +76,7 @@ Features
 Translations
 ---
 
-**None so far**
+French - Hybris95
 
 -----------------
 Thanks To
