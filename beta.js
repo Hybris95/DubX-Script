@@ -126,6 +126,7 @@ if (!hello_run && Dubtrack.session.id) {
 			dictionaries.fr['Please only report bugs for DubX, not Dubtrack. \nBe sure to give a detailed description of the bug, and a way to replicate it, if possible.'] = 'Merci de ne reporter que les bugs pour DubX, et non Dubtrack. \nSoyez certain de donner une description detaillee du bug, et une maniere de le reproduire, si possible.';
 			dictionaries.fr['Custom AFK Message'] = 'Message Personnalise d\'Absence';
 			dictionaries.fr['I\'m AFK at the moment'] = 'Je suis Absent pour le moment';
+			dictionaries.fr['I am AFK at the moment.'] = 'Je suis Absent pour le moment';
 			dictionaries.fr['Custom Mention Triggers (separate by comma)'] = 'Declencheurs de Citation Personnalisee (separer avec des virgules)';
 			dictionaries.fr['separate, custom triggers, by, comma, :heart:'] = 'separez, declencheurs personnalises, par, virgule, :heart:';
 			dictionaries.fr['Link an image file:'] = 'Joindre un fichier image';
@@ -566,21 +567,22 @@ if (!hello_run && Dubtrack.session.id) {
             }
         },
 		switch_language: function() {
-			if(!options.current_language) {
-				options.current_language = 'en';
-				hello.option('current_language', 'en');
-			} else {
-				var nextLanguage = 'en';
-				switch(options.current_language)
-				{
-					case 'en':
-						nextLanguage = 'fr';
-					case 'fr':
-						nextLanguage = 'en';
-				}
-				options.current_language = nextLanguage;
-				hello.option('current_language', nextLanguage);
+			var defaultLanguage = 'en';
+			var nextLanguage = defaultLanguage;
+			switch(options.current_language)
+			{
+				case 'en':
+					nextLanguage = 'fr';
+					break;
+				case 'fr':
+					nextLanguage = 'en';
+					break;
+				default:
+					nextLanguage = defaultLanguage;
+					break;
 			}
+			options.current_language = nextLanguage;
+			hello.option('current_language', nextLanguage);
 			// TODO - Show the correct flag
 			$('.for').remove();
 			$('.for_content').remove();
@@ -595,7 +597,7 @@ if (!hello_run && Dubtrack.session.id) {
                         var customAfkMessage = localStorage.getItem('customAfkMessage');
                         $('#chat-txt-message').val(customAfkMessage);
                     } else {
-                        $('#chat-txt-message').val('I am AFK at the moment.');
+                        $('#chat-txt-message').val(translate('I am AFK at the moment.'));
                     }
                     Dubtrack.room.chat.sendMessage();
                     options.let_active_afk = false;
