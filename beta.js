@@ -582,6 +582,8 @@ if (!hello_run && Dubtrack.session.id) {
 				hello.option('current_language', nextLanguage);
 			}
 			// TODO - Show the correct flag
+			$('.for').remove();
+			$('.for_content').remove();
 			hello.initialize();
 		},
         afk_chat_respond: function(e) {
