@@ -595,7 +595,7 @@ if (!hello_run && Dubtrack.session.id) {
                         var customAfkMessage = localStorage.getItem('customAfkMessage');
                         $('#chat-txt-message').val(customAfkMessage);
                     } else {
-                        $('#chat-txt-message').val(translate('I am AFK at the moment.'));
+                        $('#chat-txt-message').val(hello.translate('I am AFK at the moment.'));
                     }
                     Dubtrack.room.chat.sendMessage();
                     options.let_active_afk = false;
