@@ -59,8 +59,13 @@ if (!hello_run && Dubtrack.session.id) {
         draw_customize: false,
         draw_contact: false,
         draw_social: false,
-        draw_chrome: false
+        draw_chrome: false,
+		current_language: 'en'
     };
+	
+	var dictionaries = {
+		fr: new Array()
+	}
 
     $('html').addClass('dubx');
 
@@ -77,149 +82,202 @@ if (!hello_run && Dubtrack.session.id) {
         slide: function() {
             $('.for_content').slideToggle('fast');
         },
+		initDictionaries: function() {
+			// FR - Dictionary
+			dictionaries.fr['DubX Settings'] = 'Parametres DubX';
+			dictionaries.fr['Collapse/Expand Menus'] = 'Replier/Etendre les Menus';
+			dictionaries.fr['General'] = 'General';
+			dictionaries.fr['Snow'] = 'Neige';
+			dictionaries.fr['Autovote'] = 'Autovote';
+			dictionaries.fr['AFK Autorespond'] = 'Reponse automatique Absent';
+			dictionaries.fr['Emotes'] = 'Emotes';
+			dictionaries.fr['Autocomplete Emoji'] = 'Autocompletion d\'Emoji';
+			dictionaries.fr['Autocomplete Mentions'] = 'Autocompletion Citation';
+			dictionaries.fr['Custom Mention Triggers'] = 'Declencheurs de Citation Personnalisee';
+			dictionaries.fr['Notification on Mentions'] = 'Notifier lors d\'une Citation';
+			dictionaries.fr['User Interface'] = 'Interface Utilisateur';
+			dictionaries.fr['Fullscreen Video'] = 'Video Plein Ecran';
+			dictionaries.fr['Split Chat'] = 'Scinder le Chat';
+			dictionaries.fr['Hide Chat'] = 'Cacher le Chat';
+			dictionaries.fr['Hide Video'] = 'Cacher la Video';
+			dictionaries.fr['Hide Avatars'] = 'Cacher les Avatars';
+			dictionaries.fr['Hide Background'] = 'Cacher le Fond';
+			dictionaries.fr['Settings'] = 'Parametres';
+			dictionaries.fr['Spacebar Mute'] = 'Muet avec Barre Espace';
+			dictionaries.fr['Show Timestamps'] = 'Montrer Horodatages';
+			dictionaries.fr['Warn On Navigation'] = 'Avertir lors de la Navigation';
+			dictionaries.fr['Customize'] = 'Personnaliser';
+			dictionaries.fr['Plug.dj Theme'] = 'Theme Plug.dj';
+			dictionaries.fr['Community Theme'] = 'Theme de la Communaute';
+			dictionaries.fr['Custom CSS'] = 'CSS Personnalise';
+			dictionaries.fr['Custom Background'] = 'Fond Personnalise';
+			dictionaries.fr['Contact'] = 'Contact';
+			dictionaries.fr['Bug Report'] = 'Rapport de Bug';
+			dictionaries.fr['Social'] = 'Social';
+			dictionaries.fr['Like Us on Facebook'] = 'Aimez-nous sur Facebook';
+			dictionaries.fr['Follow Us on Twitter'] = 'Suivez-nous sur Twitter';
+			dictionaries.fr['Fork Us on Github'] = 'Clonez notre depot sur GitHub';
+			dictionaries.fr['Our Website'] = 'Notre Site Web';
+			dictionaries.fr['Chrome Extension'] = 'Extension Chrome';
+			dictionaries.fr['Give Us a Rating'] = 'Donnez-nous une note';
+			dictionaries.fr['Cancel'] = 'Annuler';
+			dictionaries.fr['Okay'] = 'Okay';
+			dictionaries.fr['Please only report bugs for DubX, not Dubtrack. \nBe sure to give a detailed description of the bug, and a way to replicate it, if possible.'] = 'Merci de ne reporter que les bugs pour DubX, et non Dubtrack. \nSoyez certain de donner une description detaillee du bug, et une maniere de le reproduire, si possible.';
+			dictionaries.fr['Custom AFK Message'] = 'Message Personnalise d\'Absence';
+			dictionaries.fr['I\'m AFK at the moment'] = 'Je suis Absent pour le moment';
+			dictionaries.fr['Custom Mention Triggers (separate by comma)'] = 'Declencheurs de Citation Personnalisee (separer avec des virgules)';
+			dictionaries.fr['separate, custom triggers, by, comma, :heart:'] = 'separez, declencheurs personnalises, par, virgule, :heart:';
+			dictionaries.fr['Link an image file:'] = 'Joindre un fichier image';
+			dictionaries.fr['It is recommended a .jpg file is used'] = 'Il est recommande d\'utiliser un fichier .jpg';
+			dictionaries.fr['Message from '] = 'Message de ';
+			
+			options.current_language = localStorage.getItem('current_language');
+			hello.option('current_language',options.current_language);
+		},
         //Ref 2.2: Initialize
         initialize: function() {
             var li = '<div class="for" onclick="hello.slide();"><img src="'+hello.gitRoot+'/params/params.svg" alt=""></div>';
+			hello.initDictionaries();
             var html = [
                 '<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css">',
                 '<link rel="stylesheet" type="text/css" href="'+hello.gitRoot+'/css/asset.css">',
                 '<div class="for_content">',
-                    '<span class="for_content_ver">DubX Settings</span>',
-                    '<span class="for_content_version" onclick="hello.drawAll();" title="Collapse/Expand Menus">'+our_version+'</span>',
+                    '<span class="for_content_ver">'+hello.translate('DubX Settings')+'</span>',
+                    '<span class="for_content_version" onclick="hello.drawAll();" title="'+hello.translate('Collapse/Expand Menus')+'">'+our_version+'</span>',
                     '<ul class="for_content_ul">',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'General',
+                                hello.translate('General'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
                         '<ul class="draw_general">',
                             '<li onclick="hello.snow();" class="for_content_li for_content_feature snow">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Snow</p>',
+                                '<p class="for_content_p">'+hello.translate('Snow')+'</p>',
                             '</li>',
                             '<li onclick="hello.autovote();" class="for_content_li for_content_feature autovote">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Autovote</p>',
+                                '<p class="for_content_p">'+hello.translate('Autovote')+'</p>',
                             '</li>',
                             '<li onclick="hello.afk(event);" class="for_content_li for_content_feature afk">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
                                 '<p onclick="hello.createAfkMessage();" class="for_content_edit" style="display: inline-block;color: #878c8e;font-size: .85rem;font-weight: bold;float: right;"><i class="fi-pencil"></i></p>',
-                                '<p class="for_content_p">AFK Autorespond</p>',
+                                '<p class="for_content_p">'+hello.translate('AFK Autorespond')+'</p>',
                             '</li>',
                             '<li onclick="hello.optionTwitchEmotes();" class="for_content_li for_content_feature twitch_emotes">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Emotes</p>',
+                                '<p class="for_content_p">'+hello.translate('Emotes')+'</p>',
                             '</li>',
                             '<li onclick="hello.optionEmojiPreview();" class="for_content_li for_content_feature emoji_preview">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Autocomplete Emoji</p>',
+                                '<p class="for_content_p">'+hello.translate('Autocomplete Emoji')+'</p>',
                             '</li>',
                             '<li onclick="hello.optionMentions();" class="for_content_li for_content_feature autocomplete_mentions">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Autocomplete Mentions</p>',
+                                '<p class="for_content_p">'+hello.translate('Autocomplete Mentions')+'</p>',
                             '</li>',
                             '<li onclick="hello.customMentions(event);" class="for_content_li for_content_feature custom_mentions">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
                                 '<p onclick="hello.createCustomMentions();" class="for_content_edit" style="display: inline-block;color: #878c8e;font-size: .85rem;font-weight: bold;float: right;"><i class="fi-pencil"></i></p>',
-                                '<p class="for_content_p">Custom Mention Triggers</p>',
+                                '<p class="for_content_p">'+hello.translate('Custom Mention Triggers')+'</p>',
                             '</li>',
                             '<li onclick="hello.mentionNotifications();" class="for_content_li for_content_feature mention_notifications">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Notification on Mentions</p>',
+                                '<p class="for_content_p">'+hello.translate('Notification on Mentions')+'</p>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'User Interface',
+                                hello.translate('User Interface'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
                         '<ul class="draw_userinterface">',
                             '<li onclick="hello.fs();" class="for_content_li for_content_feature fs">',
                                 '<p class="for_content_off"><i class="fi-arrows-out"></i></p>',
-                                '<p class="for_content_p">Fullscreen Video</p>',
+                                '<p class="for_content_p">'+hello.translate('Fullscreen Video')+'</p>',
                             '</li>',
                             '<li onclick="hello.split_chat();" class="for_content_li for_content_feature split_chat">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Split Chat</p>',
+                                '<p class="for_content_p">'+hello.translate('Split Chat')+'</p>',
                             '</li>',
                             '<li onclick="hello.video_window();" class="for_content_li for_content_feature video_window">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Hide Chat</p>',
+                                '<p class="for_content_p">'+hello.translate('Hide Chat')+'</p>',
                             '</li>',
                             '<li onclick="hello.chat_window();" class="for_content_li for_content_feature chat_window">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Hide Video</p>',
+                                '<p class="for_content_p">'+hello.translate('Hide Video')+'</p>',
                             '</li>',
                             '<li onclick="hello.hide_avatars();" class="for_content_li for_content_feature hide_avatars">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Hide Avatars</p>',
+                                '<p class="for_content_p">'+hello.translate('Hide Avatars')+'</p>',
                             '</li>',
                             '<li onclick="hello.medium_disable();" class="for_content_li for_content_feature medium_disable">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Hide Background</p>',
+                                '<p class="for_content_p">'+hello.translate('Hide Background')+'</p>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'Settings',
+                                hello.translate('Settings'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
                         '<ul class="draw_settings">',
                             '<li onclick="hello.spacebar_mute();" class="for_content_li for_content_feature spacebar_mute">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Spacebar Mute</p>',
+                                '<p class="for_content_p">'+hello.translate('Spacebar Mute')+'</p>',
                             '</li>',
                             '<li onclick="hello.show_timestamps();" class="for_content_li for_content_feature show_timestamps">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Show Timestamps</p>',
+                                '<p class="for_content_p">'+hello.translate('Show Timestamps')+'</p>',
                             '</li>',
                             '<li onclick="hello.warn_redirect();" class="for_content_li for_content_feature warn_redirect">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Warn On Navigation</p>',
+                                '<p class="for_content_p">'+hello.translate('Warn On Navigation')+'</p>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'Customize',
+                                hello.translate('Customize'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
                         '<ul class="draw_customize">',
                             '<li onclick="hello.nicole();" class="for_content_li for_content_feature nicole">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Plug.dj Theme</p>',
+                                '<p class="for_content_p">'+hello.translate('Plug.dj Theme')+'</p>',
                             '</li>',
                             '<li onclick="hello.css_for_the_world();" class="for_content_li for_content_feature css">',
                                 '<p class="for_content_off"><i class="fi-x"></i></p>',
-                                '<p class="for_content_p">Community Theme</p>',
+                                '<p class="for_content_p">'+hello.translate('Community Theme')+'</p>',
                             '</li>',
                             '<li onclick="hello.css_modal();" class="for_content_li for_content_feature">',
                                 '<p class="for_content_off"><i class="fi-unlink"></i></p>',
-                                '<p class="for_content_p">Custom CSS</p>',
+                                '<p class="for_content_p">'+hello.translate('Custom CSS')+'</p>',
                             '</li>',
                             '<li onclick="hello.medium_modal();" class="for_content_li for_content_feature">',
                                 '<p class="for_content_off"><i class="fi-unlink"></i></p>',
-                                '<p class="for_content_p">Custom Background</p>',
+                                '<p class="for_content_p">'+hello.translate('Custom Background')+'</p>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'Contact',
+                                hello.translate('Contact'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
                         '<ul class="draw_contact">',
                             '<li onclick="hello.report_modal();" class="for_content_li for_content_feature report">',
                                 '<p class="for_content_off"><i class="fi-comments"></i></p>',
-                                '<p class="for_content_p">Bug Report</p>',
+                                '<p class="for_content_p">'+hello.translate('Bug Report')+'</p>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'Social',
+                                hello.translate('Social'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
@@ -227,31 +285,31 @@ if (!hello_run && Dubtrack.session.id) {
                             '<li class="for_content_li for_content_feature">',
                                 '<a href="https://www.facebook.com/DubXScript" target="_blank" style="color: #878c8e;">',
                                     '<p class="for_content_off"><i class="fi-social-facebook"></i></p>',
-                                    '<p class="for_content_p">Like Us on Facebook</p>',
+                                    '<p class="for_content_p">'+hello.translate('Like Us on Facebook')+'</p>',
                                 '</a>',
                             '</li>',
                             '<li class="for_content_li for_content_feature">',
                                 '<a href="https://twitter.com/DubXScript" target="_blank" style="color: #878c8e;">',
                                     '<p class="for_content_off"><i class="fi-social-twitter"></i></p>',
-                                    '<p class="for_content_p">Follow Us on Twitter</p>',
+                                    '<p class="for_content_p">'+hello.translate('Follow Us on Twitter')+'</p>',
                                 '</a>',
                             '</li>',
                             '<li class="for_content_li for_content_feature">',
                                 '<a href="https://github.com/sinfulBA/DubX-Script" target="_blank" style="color: #878c8e;">',
                                     '<p class="for_content_off"><i class="fi-social-github"></i></p>',
-                                    '<p class="for_content_p">Fork Us on Github</p>',
+                                    '<p class="for_content_p">'+hello.translate('Fork Us on Github')+'</p>',
                                 '</a>',
                             '</li>',
                             '<li class="for_content_li for_content_feature">',
                                 '<a href="https://www.dubx.net" target="_blank" style="color: #878c8e;">',
                                     '<p class="for_content_off"><i class="fi-link"></i></p>',
-                                    '<p class="for_content_p">Our Website</p>',
+                                    '<p class="for_content_p">'+hello.translate('Our Website')+'</p>',
                                 '</a>',
                             '</li>',
                         '</ul>',
                         '<li class="for_content_li" onclick="hello.drawSection(this)">',
                             '<p class="for_content_c">',
-                                'Chrome Extension',
+                                hello.translate('Chrome Extension'),
                                 '<i class="fi-minus"></i>',
                             '</p>',
                         '</li>',
@@ -259,7 +317,7 @@ if (!hello_run && Dubtrack.session.id) {
                             '<li class="for_content_li for_content_feature">',
                                 '<a href="https://chrome.google.com/webstore/detail/dubx/oceofndagjnpebjmknefoelcpcnpcedm/reviews" target="_blank" style="color: #878c8e;">',
                                     '<p class="for_content_off"><i class="fi-like"></i></p>',
-                                    '<p class="for_content_p">Give Us a Rating</p>',
+                                    '<p class="for_content_p">'+hello.translate('Give Us a Rating')+'</p>',
                                 '</a>',
                             '</li>',
                         '</ul>',
@@ -329,10 +387,10 @@ if (!hello_run && Dubtrack.session.id) {
                         '</div>',
                         '<div class="control">',
                             '<div class="cancel" onclick="hello.closeErr();">',
-                                '<p>Cancel</p>',
+                                '<p>'+hello.translate('Cancel')+'</p>',
                             '</div>',
                             '<div class="'+confirm+' confirm">',
-                                '<p>Okay</p>',
+                                '<p>'+hello.translate('Okay')+'</p>',
                             '</div>',
                         '</div>',
                     '</div>',
@@ -450,7 +508,7 @@ if (!hello_run && Dubtrack.session.id) {
             $('.report').replaceWith('<li onclick="" class="for_content_li for_content_feature report"><p class="for_content_off"><i class="fi-check"></i></p><p class="for_content_p">Bug Report</p></li>');
         },
         report_modal: function() {
-            hello.input('Bug Report:','','Please only report bugs for DubX, not Dubtrack. \nBe sure to give a detailed description of the bug, and a way to replicate it, if possible.','confirm-for36','999');
+            hello.input('Bug Report:','',hello.translate('Please only report bugs for DubX, not Dubtrack. \nBe sure to give a detailed description of the bug, and a way to replicate it, if possible.'),'confirm-for36','999');
             $('.confirm-for36').click(hello.report_content);
             $('.confirm-for36').click(hello.closeErr);
         },
@@ -522,7 +580,7 @@ if (!hello_run && Dubtrack.session.id) {
         },
         createAfkMessage: function() {
             var current = localStorage.getItem('customAfkMessage');
-            hello.input('Custom AFK Message',current,'I\'m AFK at the moment','confirm-for315','255');
+            hello.input(hello.translate('Custom AFK Message'),current,hello.translate('I\'m AFK at the moment'),'confirm-for315','255');
             $('.confirm-for315').click(hello.saveAfkMessage);
         },
         afk: function(e) {
@@ -564,7 +622,7 @@ if (!hello_run && Dubtrack.session.id) {
         },
         createCustomMentions: function() {
             var current = localStorage.getItem('custom_mentions');
-            hello.input('Custom Mention Triggers (separate by comma)',current,'separate, custom triggers, by, comma, :heart:','confirm-for315','255');
+            hello.input(hello.translate('Custom Mention Triggers (separate by comma)'),current,hello.translate('separate, custom triggers, by, comma, :heart:'),'confirm-for315','255');
             $('.confirm-for315').click(hello.saveCustomMentions);
         },
         saveCustomMentions: function() {
@@ -655,7 +713,7 @@ if (!hello_run && Dubtrack.session.id) {
             }
         },
         medium_modal: function() {
-            hello.input('Link an image file:','It is recommended a .jpg file is used','https://example.com/example.jpg','confirm-for314','999');
+            hello.input(hello.translate('Link an image file:'),hello.translate('It is recommended a .jpg file is used'),'https://example.com/example.jpg','confirm-for314','999');
             $('.confirm-for314').click(hello.medium_import);
         },
         medium_import: function() {
@@ -1263,7 +1321,7 @@ if (!hello_run && Dubtrack.session.id) {
                     body: content,
                     icon: "http://i.imgur.com/RXJnXNJ.png"
                 };
-                var n = new Notification("Message from "+e.user.username,notificationOptions);
+                var n = new Notification(hello.translate("Message from ")+e.user.username,notificationOptions);
 
                 n.onclick = function(x) { 
                     window.focus();
@@ -1319,7 +1377,19 @@ if (!hello_run && Dubtrack.session.id) {
             Dubtrack.Events.bind("realtime:user-join", hello.updateUsersArray);
             Dubtrack.Events.bind("realtime:user-kick", hello.updateUsersArray);
             Dubtrack.Events.bind("realtime:user-leave", hello.updateUsersArray);
-        }
+        },
+		translate: function(str){
+			var dico = dictionaries[options.current_language];
+			if(dico == null){
+				return str;
+			}
+			var translation = dico[str];
+			if(translation == null || translation == '')
+			{
+				return str;
+			}
+			return translation;
+		}
     };
     //Ref 3:
     hello.initialize();
