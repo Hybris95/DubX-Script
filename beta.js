@@ -125,8 +125,8 @@ if (!hello_run && Dubtrack.session.id) {
 			dictionaries.fr['Okay'] = 'Okay';
 			dictionaries.fr['Please only report bugs for DubX, not Dubtrack. \nBe sure to give a detailed description of the bug, and a way to replicate it, if possible.'] = 'Merci de ne reporter que les bugs pour DubX, et non Dubtrack. \nSoyez certain de donner une description detaillee du bug, et une maniere de le reproduire, si possible.';
 			dictionaries.fr['Custom AFK Message'] = 'Message Personnalise d\'Absence';
-			dictionaries.fr['I\'m AFK at the moment'] = 'Je suis Absent pour le moment';
-			dictionaries.fr['I am AFK at the moment.'] = 'Je suis Absent pour le moment';
+			dictionaries.fr['I\'m not here right now.'] = 'Je ne suis pas present pour le moment';
+			dictionaries.fr['[AFK] I\'m not here right now.'] = '[AFK] Je ne suis pas present pour le moment';
 			dictionaries.fr['Custom Mention Triggers (separate by comma)'] = 'Declencheurs de Citation Personnalisee (separer avec des virgules)';
 			dictionaries.fr['separate, custom triggers, by, comma, :heart:'] = 'separez, declencheurs personnalises, par, virgule, :heart:';
 			dictionaries.fr['Link an image file:'] = 'Joindre un fichier image';
@@ -593,9 +593,9 @@ if (!hello_run && Dubtrack.session.id) {
                 if (options.let_active_afk) {
                     if (localStorage.getItem('customAfkMessage')) {
                         var customAfkMessage = localStorage.getItem('customAfkMessage');
-                        $('#chat-txt-message').val(customAfkMessage);
+                        $('#chat-txt-message').val('[AFK] '+customAfkMessage);
                     } else {
-                        $('#chat-txt-message').val(hello.translate('I am AFK at the moment.'));
+                        $('#chat-txt-message').val(hello.translate('[AFK] I\'m not here right now.'));
                     }
                     Dubtrack.room.chat.sendMessage();
                     options.let_active_afk = false;
@@ -612,7 +612,7 @@ if (!hello_run && Dubtrack.session.id) {
         },
         createAfkMessage: function() {
             var current = localStorage.getItem('customAfkMessage');
-            hello.input(hello.translate('Custom AFK Message'),current,hello.translate('I\'m AFK at the moment'),'confirm-for315','255');
+            hello.input(hello.translate('Custom AFK Message'),current,hello.translate('I\'m not here right now.'),'confirm-for315','255');
             $('.confirm-for315').click(hello.saveAfkMessage);
         },
         afk: function(e) {
